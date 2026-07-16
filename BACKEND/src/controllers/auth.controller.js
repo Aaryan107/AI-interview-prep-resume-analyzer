@@ -43,7 +43,12 @@ async function registerUser(req, res) {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
 
-        res.cookie('token', token)
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        })
 
         res.status(201).json({
             message: 'user created',
@@ -89,7 +94,12 @@ async function loginUser(req, res) {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
 
-    res.cookie('token', token)
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+    })
 
     res.status(200).json({
         message: 'user logged in',
@@ -120,7 +130,11 @@ async function logoutUser(req, res) {
         token
     })
 
-    res.clearCookie('token')
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    })
 
     res.status(200).json({
         message: 'user logged out'
