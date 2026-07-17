@@ -10,7 +10,7 @@ import { Interview as InterviewReport } from './features/interview/pages/Intervi
 export const router=createBrowserRouter([
     {
         path: '/',
-        element: <Protected><Home/><Link to="/login">Login</Link> | <Link to="/register">Register</Link></Protected>,
+        element: <Protected><Home/></Protected>,
         errorElement: <div><h1>404 Not Found</h1><Link to="/">Go Home</Link></div>
     },
     {
